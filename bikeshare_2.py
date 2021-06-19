@@ -1,6 +1,7 @@
 import time
 import pandas as pd
 import numpy as np
+from tabulate import tabulate
 
 CITY_DATA = {'chicago': 'chicago.csv',
              'new york city': 'new_york_city.csv',
@@ -78,7 +79,7 @@ def load_data(city, month, day):
 
     if day != 'all':
         df = df[df['Day of Week'] == day.title()]
-    
+
     return df
 
 
@@ -167,7 +168,9 @@ def main():
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
-
+        display_data = input('\nWould you like to see 5 lines of raw data? Enter yes or no.\n')
+        if display_data.lower() == 'yes':
+            print(df.head())
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
@@ -175,7 +178,7 @@ def main():
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
-
+        
 
 if __name__ == "__main__":
     main()
